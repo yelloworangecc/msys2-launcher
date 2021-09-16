@@ -23,3 +23,20 @@ Pinning
 -------
 
 As with many other applications, the correct way to pin a shortcut to the taskbar is by right-clicking the button of a running MSYS2 shell (started by this launcher) on the taskbar and choosing "Pin this program to taskbar".  Pinning the `.exe` file itself won't create the shortcut correctly.  There are tools to diagnose and fix such a situation (7+ Taskbar Tweaker and Win7AppId) in case re-pinning is not preferred.
+
+Msys2 Here
+----------
+
+Just like Git Bash Here, right click in windows explorer and start msys2 from that direcotry. Steps to setup:
+
+1. build this project
+2. replace the executables in your msys2 directory
+3. change msys2_here.reg to suit your msys2 executables
+4. double click msys2_here.reg to import
+5. add blow content to your .bash_profile
+``` shell
+if [ "x$LAUNCH_PATH" == "x" ]; then
+    export LAUNCH_PATH=~
+fi
+cd $LAUNCH_PATH
+```

@@ -10,7 +10,7 @@ msys2.ini: launcher.ini
 msys2.res: launcher.rc msys2.ico
 	$(PREFIX)windres -O COFF -o $@ $< -DMSYSTEM=MSYS -DICONFILE=msys2.ico
 msys2.exe: launcher.c msys2.res
-	$(PREFIX)gcc -std=c11 -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
+	$(PREFIX)g++ -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
 
 mingw32.ini: launcher.ini
 	cp -f $^ $@
@@ -18,7 +18,7 @@ mingw32.ini: launcher.ini
 mingw32.res: launcher.rc mingw32.ico
 	$(PREFIX)windres -O COFF -o $@ $< -DMSYSTEM=MINGW32 -DICONFILE=mingw32.ico
 mingw32.exe: launcher.c mingw32.res
-	$(PREFIX)gcc -std=c11 -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
+	$(PREFIX)g++ -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
 
 mingw64.ini: launcher.ini
 	cp -f $^ $@
@@ -26,7 +26,7 @@ mingw64.ini: launcher.ini
 mingw64.res: launcher.rc mingw64.ico
 	$(PREFIX)windres -O COFF -o $@ $< -DMSYSTEM=MINGW64 -DICONFILE=mingw64.ico
 mingw64.exe: launcher.c mingw64.res
-	$(PREFIX)gcc -std=c11 -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
+	$(PREFIX)g++ -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
 
 ucrt64.ini: launcher.ini
 	cp -f $^ $@
@@ -34,7 +34,7 @@ ucrt64.ini: launcher.ini
 ucrt64.res: launcher.rc ucrt64.ico
 	$(PREFIX)windres -O COFF -o $@ $< -DMSYSTEM=UCRT64 -DICONFILE=ucrt64.ico
 ucrt64.exe: launcher.c ucrt64.res
-	$(PREFIX)gcc -std=c11 -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
+	$(PREFIX)g++ -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
 
 clang64.ini: launcher.ini
 	cp -f $^ $@
@@ -42,4 +42,4 @@ clang64.ini: launcher.ini
 clang64.res: launcher.rc clang64.ico
 	$(PREFIX)windres -O COFF -o $@ $< -DMSYSTEM=CLANG64 -DICONFILE=clang64.ico
 clang64.exe: launcher.c clang64.res
-	$(PREFIX)gcc -std=c11 -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^
+	$(PREFIX)g++ -Wall -Wextra -Werror -static -municode -mwindows -o $@ $^

@@ -255,6 +255,36 @@ int wmain(int argc, wchar_t* argv[]) {
 		args++;
 	}
 
+	if (argc > 1)
+	{
+		tmp = argv[1];
+		if (*(tmp+1) == ':' || *tmp == '/')
+		{
+			while (*tmp != L'\0') {
+				if (*args == *tmp) {
+					args++;
+					tmp++;
+				} else if (*args == L'"') {
+					args++;
+				} else {
+					ShowError(L"Could not parse launch path", argv[0], 0);
+					return __LINE__;
+				}
+			}
+			while (*args == L'"') {
+				args++;
+			}
+			while (*args == L' ') {
+				args++;
+			}
+
+			code = SetEnvironmentVariable(L"LAUNCH_PATH", argv[1]);
+			if (code == 0) {
+				ShowLastError(L"Could not set environment variable");
+			}
+		}
+	}
+
 	code = -1;
 	buf = NULL;
 	buflen = 1024;
@@ -264,7 +294,7 @@ int wmain(int argc, wchar_t* argv[]) {
 			ShowError(L"Could not allocate memory", L"", 0);
 			return __LINE__;
 		}
-		code = swprintf(buf, buflen, L"%ls\\usr\\bin\\mintty.exe -i '%ls' -o 'AppLaunchCmd=%ls' -o 'AppID=MSYS2.Shell.%ls.%d%ls' -o 'AppName=MSYS2 %ls Shell' -t 'MSYS2 %ls Shell' --store-taskbar-properties -- %ls %ls", msysdir, exepath, exepath, msystem, APPID_REVISION, msysdirhash, msystem, msystem, argc == 1 ? L"-" : L"/usr/bin/sh -lc '\"$@\"' sh", args);
+		code = swprintf(buf, buflen, L"%ls\\usr\\bin\\mintty.exe -i '%ls' -o 'AppLaunchCmd=%ls' -o 'AppID=MSYS2.Shell.%ls.%d%ls' -o 'AppName=MSYS2 %ls Shell' -t 'MSYS2 %ls Shell' --store-taskbar-properties -- %ls %ls", msysdir, exepath, exepath, msystem, APPID_REVISION, msysdirhash, msystem, msystem, args[0] == '\0' ? L"-" : L"/usr/bin/sh -lc '\"$@\"' sh", args);
 		buflen *= 2;
 	}
 	if (code < 0) {
